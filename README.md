@@ -53,15 +53,16 @@ CREATE TABLE retail_sales
       	-- Identifying the duplicates
 	SELECT
 		*,
-		RANK() OVER(PARTITION BY transactions_id, sale_date,sale_time,customer_id,gender, age, category, quantity, price_per_unit, cogs, total_sale) AS row_num
+		RANK() OVER(PARTITION BY transactions_id, 						sale_date,sale_time,customer_id,gender, age, category, quantity, 			price_per_unit, cogs, 	total_sale) AS row_num
 	FROM
 		retail_sales;
 		
 	-- Writing CTEs for finding duplicate:
+  
 	WITH cte_duplicates AS (
 		SELECT
 		*,
-		RANK() OVER(PARTITION BY transactions_id, sale_date,sale_time,customer_id,gender, age, category, quantity, price_per_unit, cogs, total_sale) AS row_num
+		RANK() OVER(PARTITION BY transactions_id, 						sale_date,sale_time,customer_id,gender, age, category, quantity, 			price_per_unit, cogs, total_sale) AS row_num
 	FROM
 		retail_sales
 	)
@@ -109,7 +110,7 @@ The following SQL queries were developed to answer specific business questions:
 
 1. **Write a SQL query to retrieve all columns for sales made on '2022-11-05**:
 ```sql
-SELECT *
+		SELECT *
 		FROM
 			retail_sales
 		WHERE
@@ -118,33 +119,33 @@ SELECT *
 
 2. **Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022**:
 ```sql
-SELECT 
-  *
-FROM
-    retail_sales
-WHERE 
-    category = 'Clothing'
-    AND 
-    (TO_CHAR(sale_date, 'YYYY-MM') = '2022-11'
-    AND
-    quantity >= 4)
+	SELECT 
+	  *
+	FROM
+	    retail_sales
+	WHERE 
+	    category = 'Clothing'
+	    AND 
+	    (TO_CHAR(sale_date, 'YYYY-MM') = '2022-11'
+	    AND
+	    quantity >= 4)
 ```
 
 3. **Write a SQL query to calculate the total sales (total_sale) for each category.**:
 ```sql
-SELECT 
-    category,
-    SUM(total_sale) as net_sale,
-    COUNT(*) as total_orders
-FROM
-    retail_sales
-GROUP BY
-    category
+		SELECT 
+		    category,
+		    SUM(total_sale) as net_sale,
+		    COUNT(*) as total_orders
+		FROM
+		    retail_sales
+		GROUP BY
+		    category
 ```
 
 4. **Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category.**:
 ```sql
-        SELECT
+        	SELECT
 			ROUND(AVG(age),0) avg_age_customers
 		FROM
 			retail_sales
@@ -154,7 +155,7 @@ GROUP BY
 
 5. **Write a SQL query to find all transactions where the total_sale is greater than 1000.**:
 ```sql
-        SELECT
+       		 SELECT
 			*
 		FROM
 			retail_sales
@@ -164,16 +165,16 @@ GROUP BY
 
 6. **Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.**:
 ```sql
-SELECT 
-    category,
-    gender,
-    COUNT(*) as total_trans
-FROM retail_sales
-GROUP BY 
-    category,
-    gender
-ORDER BY
-    category;
+		SELECT 
+		    category,
+		    gender,
+		    COUNT(*) as total_trans
+		FROM retail_sales
+		GROUP BY 
+		    category,
+		    gender
+		ORDER BY
+		    category;
 ```
 
 7. **Write a SQL query to calculate the average sale for each month. Find out best selling month in each year**:
